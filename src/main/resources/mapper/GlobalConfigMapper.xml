@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ltd.newbee.mall.dao.GlobalConfigMapper">
+    <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.GlobalConfig">
+        <result column="config_id" jdbcType="INTEGER" property="configId"/>
+        <result column="api_list" jdbcType="INTEGER" property="apiList"/>
+        <result column="exchange_config" jdbcType="VARCHAR" property="exchangeConfig"/>
+        <result column="convert_config" jdbcType="VARCHAR" property="convertConfig"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        config_id, api_list, exchange_config, convert_config
+    </sql>
+
+    <select id="selectConfig" resultMap="BaseResultMap">
+        select
+                <include refid="Base_Column_List"/>
+                from global_config
+                where config_id = #{configId,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateConfig" parameterType="ltd.newbee.mall.entity.GlobalConfig">
+        update global_config
+        <set>
+            <if test="apiList != null">
+                api_list = #{apiList,jdbcType=INTEGER},
+            </if>
+            <if test="exchangeConfig != null">
+                exchange_config = #{exchangeConfig,jdbcType=VARCHAR},
+            </if>
+            <if test="convertConfig != null">
+                convert_config = #{convertConfig,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where config_id = #{configId,jdbcType=INTEGER}
+    </update>
+
+<!--    <insert id="insertOrder" parameterType="ltd.newbee.mall.entity.NewBeeMallSMSOrder">-->
+<!--        insert into tb_newbee_mall_sms_order (user_id, platform, order_id, service_name, country_name, price, phone, code-->
+<!--          )-->
+<!--        values (#{userId,jdbcType=BIGINT}, #{platform,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR},-->
+<!--            #{serviceName,jdbcType=VARCHAR}, #{countryName,jdbcType=VARCHAR}, #{smsPrice,jdbcType=VARCHAR},-->
+<!--            #{phone,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}-->
+<!--          )-->
+<!--    </insert>-->
+
+
+</mapper>
